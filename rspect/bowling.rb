@@ -7,7 +7,7 @@ class Bowling
   end
 
   def hit(pin)
-    @score += pin
+    @score += 1
   end
 
 end
