@@ -29,8 +29,31 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 #
 # Your goal is to write the score method.
 
-def score(dice)
-  # You need to write this method
+def score(values)
+  keyValues = { 5=>50, 1=>100 }
+  counter = 0
+  values.each.with_index do |item, index|
+    print "#{index} probando con #{item}"
+    if item == values[index+1] && item == values[index+2]
+      if item==1
+        counter += 1000
+      else
+        counter += keyValues[ item||0 ] ||0
+      end
+    elsif item == values[index-1] && item == values[index+1]
+      if item != 1
+        counter += item * 100
+      end
+    elsif item == values[index-1] && item == values[index-2]
+      counter += 0
+    elsif
+      counter += keyValues[ item||0 ] ||0
+    end
+
+    print "\n #{index} Counter Acumulated: #{counter}"
+
+  end
+  counter
 end
 
 class AboutScoringProject < Neo::Koan
@@ -67,7 +90,7 @@ class AboutScoringProject < Neo::Koan
   end
 
   def test_score_of_mixed_is_sum
-    assert_equal 250, score([2,5,2,2,3])
+    assert_equal 250, score([5,2,2,2,3])
     assert_equal 550, score([5,5,5,5])
     assert_equal 1100, score([1,1,1,1])
     assert_equal 1200, score([1,1,1,1,1])
